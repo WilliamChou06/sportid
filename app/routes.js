@@ -37,6 +37,23 @@ module.exports = (app, passport) => {
     req.logout();
     res.redirect('/');
   });
+
+  app.get(
+    '/auth/google',
+    passport.authenticate('google', {
+      failureRedirect: 'login'
+    })
+  );
+
+  app.get(
+    'auth/google/callback',
+    passport.authenticate('google', {
+      failureRedirect: '/login'
+    }),
+    (req, res) => {
+      res.redirect('/');
+    }
+  );
 };
 
 const isLoggedIn = (req, res, next) => {
