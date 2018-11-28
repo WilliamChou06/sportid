@@ -46,7 +46,7 @@ module.exports = (app, passport) => {
   );
 
   app.get(
-    'auth/google/callback',
+    '/auth/google/callback',
     passport.authenticate('google', {
       failureRedirect: '/login'
     }),
@@ -55,6 +55,8 @@ module.exports = (app, passport) => {
     }
   );
 };
+
+// Might have to put in export
 
 const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
