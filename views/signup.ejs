@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Design Bootstrap -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/css/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div id="intro" class="view">
+      <div class="mask rgba-black-strong">
+        <div
+          class="container-fluid d-flex align-items-center justify-content-center h-100"
+        >
+          <div class="row d-flex justify-content-center text-center">
+            <!-- Material form login -->
+            <div class="card animated fadeIn">
+              <h5 class="card-header info-color white-text text-center py-4">
+                <strong>Crear una cuenta</strong>
+              </h5>
+
+              <!-- Card content -->
+              <div class="card-body px-lg-5 pt-0">
+                <!-- Form -->
+                <form
+                  action="/signup"
+                  method="post"
+                  class="text-center"
+                  style="color: #757575;"
+                >
+                  <!-- Email -->
+                  <div class="md-form">
+                    <input
+                      type="text"
+                      id="materialLoginFormName"
+                      class="form-control"
+                      name="name"
+                    />
+                    <label for="materialLoginFormName">Nombre</label>
+                  </div>
+                  <div class="md-form">
+                    <input
+                      type="email"
+                      id="materialLoginFormEmail"
+                      class="form-control"
+                      name="email"
+                    />
+                    <label for="materialLoginFormEmail">E-mail</label>
+                  </div>
+                  <div class="md-form">
+                    <input
+                      type="text"
+                      id="materialLoginFormPhoneNum"
+                      class="form-control"
+                      name="phoneNumber"
+                    />
+                    <label for="materialLoginFormPhoneNum"
+                      >Número de Teléfono</label
+                    >
+                  </div>
+
+                  <!-- Password -->
+                  <div class="md-form">
+                    <input
+                      type="password"
+                      id="materialLoginFormPassword"
+                      class="form-control"
+                      name="password"
+                    />
+                    <label for="materialLoginFormPassword">Contraseña</label>
+                  </div>
+
+                  <div class="md-form">
+                    <input
+                      type="password"
+                      id="materialLoginFormPasswordConfirm"
+                      class="form-control"
+                      name="password-confirm"
+                    />
+                    <label for="materialLoginFormPasswordConfirm"
+                      >Confirmar Contraseña</label
+                    >
+                  </div>
+
+                  <div class="d-flex justify-content-around"></div>
+                  <!-- Sign in button -->
+                  <button
+                    class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+                    type="submit"
+                  >
+                    Registrarse
+                  </button>
+
+                  <a href="/">¿Ya tienes una cuenta?</a>
+                </form>
+                <!-- Form -->
+              </div>
+            </div>
+            <!-- Material form login -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    ></script>
+    <!-- Bootstrap tooltips -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"
+    ></script>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"
+    ></script>
+    <!-- MDB core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/js/mdb.min.js"
+    ></script>
+    <script>
+      let password = document.getElementById('materialLoginFormPassword');
+      let passwordConfirm = document.getElementById('materialLoginFormPasswordConfirm');
+
+      passwordConfirm.onkeydown = () => {
+        if (password.value !== passwordConfirm.value){
+          passwordConfirm.setCustomValidity('Las contraseñas no coinciden.')
+        } else {
+          passwordConfirm.setCustomValidity('')
+
+        }
+      }
+    </script>
+  </body>
+</html>
