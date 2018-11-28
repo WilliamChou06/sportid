@@ -41,7 +41,7 @@ module.exports = (app, passport) => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
-      failureRedirect: 'login'
+      scope: ['profile']
     })
   );
 
