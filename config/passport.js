@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const User = require('../app/models/user');
 
@@ -96,6 +97,43 @@ module.exports = passport => {
 
           return done(null, user);
         });
+      }
+    )
+  );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: 'https://sportid6.herokuapp.com/auth/google/callback'
+      },
+      (accessToken, refreshToken, profile, cb) => {
+        User.findOne(
+          {
+            'google.id': profile.id
+          },
+          (err, user) => {
+            if (err) {
+              done(err);
+            }
+
+            if (!user) {
+              let newUser = new User();
+              newUser.google.id = profile.id;
+              newUser.google.name = profile.username;
+              newUser.save(() => {
+                if (err) {
+                  throw err;
+                }
+
+                return done(null, newUser);
+              });
+            } else {
+              return done(null, user);
+            }
+          }
+        );
       }
     )
   );

@@ -142,7 +142,7 @@
       let password = document.getElementById('materialLoginFormPassword');
       let passwordConfirm = document.getElementById('materialLoginFormPasswordConfirm');
 
-      passwordConfirm.onkeydown = () => {
+      passwordConfirm.onkeyup = () => {
         if (password.value !== passwordConfirm.value){
           passwordConfirm.setCustomValidity('Las contraseñas no coinciden.')
         } else {
