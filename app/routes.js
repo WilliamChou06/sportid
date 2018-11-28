@@ -30,7 +30,7 @@ module.exports = (app, passport) => {
     // res.render('profile.ejs', {
     //   user: req.user
     // });
-    res.send('done');
+    res.send('done PERFIL');
   });
 
   app.get('/logout', () => {
@@ -51,7 +51,7 @@ module.exports = (app, passport) => {
       failureRedirect: '/login'
     }),
     (req, res) => {
-      res.redirect('/');
+      res.redirect('/profile');
     }
   );
 };
