@@ -1,6 +1,13 @@
 module.exports = (app, passport) => {
   app.get('/', (req, res) => {
-    res.render('index.ejs');
+    if (process.env.NODE_ENV === 'production') {
+      var googleAuthLink = 'https://sportid6.herokuapp.com/auth/google';
+    } else {
+      var googleAuthLink = 'http://localhost:8080/auth/google';
+    }
+    res.render('index.ejs', {
+      googleAuthLink
+    });
   });
   app.get('/signup', (req, res) => {
     res.render('signup.ejs');
@@ -19,7 +26,7 @@ module.exports = (app, passport) => {
     '/login',
     passport.authenticate('local-login', {
       successRedirect: '/profile',
-      failureRedirect: '/login',
+      failureRedirect: '/',
       failureFlash: true
     })
   );
@@ -30,7 +37,9 @@ module.exports = (app, passport) => {
     // res.render('profile.ejs', {
     //   user: req.user
     // });
-    res.send('done PERFIL');
+    res.render('profile.ejs', {
+      user: req.user
+    });
   });
 
   app.get('/logout', () => {

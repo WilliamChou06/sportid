@@ -1,5 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const keys = require('../config/keys');
 
 const User = require('../app/models/user');
 
@@ -45,6 +46,7 @@ module.exports = passport => {
                 let newUser = new User();
                 newUser.local.email = email;
                 newUser.local.password = newUser.generateHash(password);
+                newUser.local.name = req.body.name;
                 newUser.local.phoneNumber = req.body.phoneNumber;
 
                 newUser.save(err => {
@@ -104,9 +106,9 @@ module.exports = passport => {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'https://sportid6.herokuapp.com/auth/google/callback'
+        clientID: keys.googleClientID,
+        clientSecret: keys.googleClientSecret,
+        callbackURL: '/auth/google/callback'
       },
       (accessToken, refreshToken, profile, done) => {
         User.findOne(
@@ -121,7 +123,7 @@ module.exports = passport => {
             if (!user) {
               let newUser = new User();
               newUser.google.id = profile.id;
-              newUser.google.name = profile.username;
+              newUser.google.name = profile.displayName;
               newUser.save(() => {
                 if (err) {
                   throw err;
