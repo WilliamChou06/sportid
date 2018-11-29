@@ -108,7 +108,7 @@ module.exports = passport => {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: 'https://sportid6.herokuapp.com/auth/google/callback'
       },
-      (accessToken, refreshToken, profile, cb) => {
+      (accessToken, refreshToken, profile, done) => {
         User.findOne(
           {
             'google.id': profile.id
