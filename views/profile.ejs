@@ -22,11 +22,11 @@
     <link rel="stylesheet" href="/stylesheets/main.css" />
     <title>Perfil</title>
   </head>
-  <body>
+  <body class="">
     <!-- Main Navigation -->
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark info-color">
-        <a class="navbar-brand" href="#"><strong>Navbar</strong></a>
+        <a class="navbar-brand" href="#"><strong>SportID</strong></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -64,12 +64,42 @@
       </nav>
     </header>
     <!-- Main Navigation -->
-
+    <br>
     <div class="container row">
-      <div class="col-3">asdasd</div>
+      <div class="col-3">
+        <img
+          id="profileImg"
+          src="http://www.buckinghamandcompany.com.au/wp-content/uploads/2016/03/profile-placeholder.png"
+          alt=""
+        />
+        <form id="profileImgForm" class="md-form">
+          <div class="file-field">
+            <div id="profileImgBtn" class="btn btn-primary btn-sm float-left">
+              <span>Choose file</span>
+              <input type="file">
+            </div>
+          </div>
+        </form>
+      </div>
+
       <div class="col-9">
-        <h3><%= user.local.name %><%= user.google.name %></h3>
-        <p>Teléfono: <%= user.local.phoneNumber %></p>
+        <h3><%= user.nombre %> <%= user.apellido %></h3>
+        <br>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Fecha de Nacimiento</strong>: <%= fecha_nac %></li>
+            <li class="list-group-item"><strong>Número de Documento</strong>: <%= user.nro_documento %></li>
+            <li class="list-group-item"><strong>Tipo de Sangre</strong>: <%= user.tipo_sangre %></li>
+            <li class="list-group-item"><strong>Alergias</strong>: <%= user.alergias %></li>
+            <li class="list-group-item"><strong>Seguro de Salud</strong>: <%= user.seguro_salud %></li>
+            <li class="list-group-item"><strong>País de Nacimiento</strong>: <%= user.pais_nac %></li>
+            <li class="list-group-item"><strong>Nombre Contacto de Emergencia</strong>: <%= user.contacto_emerg_nombre %></li>
+            <li class="list-group-item"><strong>Numero Contacto de Emergencia</strong>: <%= user.contacto_emerg_numero %></li>
+            <li class="list-group-item"><strong>Celular</strong>: <%= user.celular %></li>
+            <li class="list-group-item"><strong>Sexo</strong>: <%= user.sexo %></li>
+            <li class="list-group-item"><strong>Club de Triatlón</strong>: <%= user.club_triatlon %></li>
+          </ul>
+        <a href="/profile/<%= user.id %>/edit" class="btn btn-outline-info waves-effect">Editar Información</a>
+
       </div>
     </div>
 

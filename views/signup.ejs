@@ -45,16 +45,27 @@
                   class="text-center"
                   style="color: #757575;"
                 >
-                  <!-- Email -->
                   <div class="md-form">
                     <input
                       type="text"
-                      id="materialLoginFormName"
+                      id="materialLoginFormNombre"
                       class="form-control"
-                      name="name"
+                      name="nombre"
+                      required
                       size="30"
                     />
-                    <label for="materialLoginFormName">Nombre</label>
+                    <label for="materialLoginFormNombre">Nombre</label>
+                  </div>
+                  <div class="md-form">
+                    <input
+                      type="text"
+                      id="materialLoginFormLastName"
+                      class="form-control"
+                      name="apellido"
+                      required
+                      size="30"
+                    />
+                    <label for="materialLoginFormLastName">Apellido</label>
                   </div>
                   <div class="md-form">
                     <input
@@ -62,21 +73,10 @@
                       id="materialLoginFormEmail"
                       class="form-control"
                       name="email"
+                      required
                     />
                     <label for="materialLoginFormEmail">E-mail</label>
                   </div>
-                  <div class="md-form">
-                    <input
-                      type="text"
-                      id="materialLoginFormPhoneNum"
-                      class="form-control"
-                      name="phoneNumber"
-                    />
-                    <label for="materialLoginFormPhoneNum"
-                      >Número de Teléfono</label
-                    >
-                  </div>
-
                   <!-- Password -->
                   <div class="md-form">
                     <input
@@ -84,6 +84,7 @@
                       id="materialLoginFormPassword"
                       class="form-control"
                       name="password"
+                      required
                     />
                     <label for="materialLoginFormPassword">Contraseña</label>
                   </div>
@@ -94,6 +95,7 @@
                       id="materialLoginFormPasswordConfirm"
                       class="form-control"
                       name="password-confirm"
+                      required
                     />
                     <label for="materialLoginFormPasswordConfirm"
                       >Confirmar Contraseña</label
@@ -142,16 +144,25 @@
     ></script>
     <script>
       let password = document.getElementById('materialLoginFormPassword');
-      let passwordConfirm = document.getElementById('materialLoginFormPasswordConfirm');
+      let confirm_password = document.getElementById(
+        'materialLoginFormPasswordConfirm'
+      );
 
-      passwordConfirm.onkeyup = () => {
-        if (password.value !== passwordConfirm.value){
-          passwordConfirm.setCustomValidity('Las contraseñas no coinciden.')
+      const validatePassword = () => {
+        if (password.value != confirm_password.value) {
+          confirm_password.setCustomValidity("Las contraseñas no coinciden!");
         } else {
-          passwordConfirm.setCustomValidity('')
-
+          confirm_password.setCustomValidity('');
         }
-      }
+      };
+
+      password.onchange = validatePassword;
+      confirm_password.onkeyup = validatePassword;
+
+      $('.flatpickr').flatpickr({
+        dateFormat: 'Y-m-d'
+      });
     </script>
+    <script></script>
   </body>
 </html>
