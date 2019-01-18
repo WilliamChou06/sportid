@@ -24,6 +24,25 @@
   </head>
   <body class="">
     <div id="intro" class="view">
+      
+        <% if(error && error.length > 0) { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <p><%=error %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        <% } %>
+
+        <% if(success && success.length > 0) { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <p><%=success %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        <% } %>
+
       <div class="mask rgba-black-strong">
         <div
           class="container-fluid d-flex align-items-center justify-content-center h-100"
@@ -92,7 +111,7 @@
                     class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
                     type="submit"
                   >
-                    Sign in
+                    Iniciar Sesión
                   </button>
 
                   <!-- Register -->
@@ -112,7 +131,6 @@
         </div>
       </div>
     </div>
-    
 
     <!-- JQuery -->
     <script
@@ -134,6 +152,8 @@
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/js/mdb.min.js"
     ></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.32.2/dist/sweetalert2.all.min.js" integrity="sha256-ciE1hr2atfu9aoFVm/taet4lUjFOHdg78BhvpQGjGgk=" crossorigin="anonymous"></script>
+    <script>
+      </script>
   </body>
 </html>

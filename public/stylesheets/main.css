@@ -14,7 +14,10 @@ body,
 }
 
 #profileImg {
-  max-width: 100%;
+  height: auto;
+  width: auto;
+  max-width: 400px;
+  max-height: 400px;
 }
 
 #profileImgBtn {
@@ -31,18 +34,44 @@ body,
   border: none;
   border-bottom: 1px solid #ced4da;
   width: 75%;
-  text-align: center
+  text-align: center;
 }
 
 .container {
   padding: 0 10% 0 10%;
 }
 
+tr {
+  cursor: pointer;
+}
+
 .flash-message {
   position: absolute;
-  
 }
 
 .radioLabel {
   padding-right: 10px;
+}
+
+.alert {
+  z-index: 1;
+}
+
+#profileImgBtn {
+  text-align: center;
+}
+
+select {
+  /* text-align: center;
+  text-align-last: center */
+}
+
+@media (max-width: 768px) {
+  #profileName {
+    margin-top: 15px;
+    text-align: center;
+  }
+  body {
+    overflow-x: hidden;
+  }
 }

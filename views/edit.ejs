@@ -68,31 +68,51 @@
               <a class="nav-link"><i class="fa fa-twitter"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"><i class="fa fa-instagram"></i></a>
+              <a href="/logout" class="nav-link"><i aria-hidden class="fas fa-sign-out-alt" title="Cerrar sesión"></i></a>
             </li>
           </ul>
         </div>
       </nav>
     </header>
     <!-- Main Navigation -->
-
-    <div class="container row">
-      <div class="col-3">
+    <br />
+    <div class="container-fluid row mx-auto">
+      <div class="col-lg-4 col-sm-12">
         <img
           id="profileImg"
-          src="http://www.buckinghamandcompany.com.au/wp-content/uploads/2016/03/profile-placeholder.png"
-          alt=""
+          src="<% if(!user.avatar_link){ %> https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png <% } else{ %>
+            <%= user.avatar_link %> <% } %>"
+          alt="user avatar"
+          class="mx-auto d-block"
         />
-        <form id="profileImgForm" class="md-form">
-          <div class="file-field">
-            <div id="profileImgBtn" class="btn btn-primary btn-sm float-left">
-              <span>Choose file</span> <input type="file" />
+        <form
+          action="/profile"
+          method="POST"
+          id="profileImgForm"
+          class="md-form"
+          enctype="multipart/form-data"
+        >
+          <div class="custom-file">
+            <div id="profileImgBtn" class="btn btn-primary mx-auto d-block">
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                required
+              />
             </div>
           </div>
+          <button
+            type="submit"
+            class="btn btn-outline-success waves-effect btn-block"
+          >
+            Subir Imagen
+          </button>
         </form>
       </div>
 
-      <div class="col-9">
+      <div class="col-lg-8 col-sm-12">
         <!-- Default form login -->
         <form
           class="border border-light p-5"
@@ -118,9 +138,9 @@
               id="formApellido"
               class="form-control"
               name="apellido"
-              value="<%= user.apellido %>"
+              value="<%= user.apellidos %>"
             />
-            <label for="formApellido">Apellido</label>
+            <label for="formApellido">Apellidos</label>
           </div>
           <div class="md-form">
             <i class="fas fa-id-card prefix"></i>
@@ -175,6 +195,7 @@
               id="form_contacto_emerg_numero"
               class="form-control"
               name="contacto_emerg_numero"
+              pattern="^[0-9]*$"
               value="<%= user.contacto_emerg_numero %>"
             />
             <label for="form_contacto_emerg_numero"
@@ -188,19 +209,41 @@
               id="form-celular"
               class="form-control"
               name="celular"
+              pattern="^[0-9]*$"
               value="<%= user.celular %>"
             />
             <label for="form-celular">Celular</label>
           </div>
-          <div class="md-form input-group">
+          <div class="md-form input-group ">
             <select name="club_triatlon" class="browser-default custom-select">
               <option selected hidden value="<%= user.club_triatlon %>"
                 ><% if(!user.club_triatlon){ %> Elija su Club <% } else{ %> <%=
                 user.club_triatlon %> <% } %></option
               >
-              <option value="Club 1">Club 1</option>
+              <option value="Club 1">Camellos</option>
               <option value="Espartana">Espartana</option>
               <option value="Three">Three</option>
+            </select>
+          </div>
+          <div class="md-form input-group">
+            <!-- <p style="line-height: 3"><strong></strong>>: &nbsp;&nbsp;&nbsp; </p> -->
+            <select
+              name="ciudad_residencia"
+              class="browser-default custom-select"
+            >
+              <option selected hidden value="<%= user.ciudad_residencia %>"
+                ><% if(!user.ciudad_residencia){ %> Santa Cruz <% } else{ %> <%=
+                user.ciudad_residencia %> <% } %></option
+              >
+              <option value="Beni">Beni</option>
+              <option value="Chuquisaca">Chuquisaca</option>
+              <option value="Cochabamba">Cochabamba</option>
+              <option value="La Paz">La Paz</option>
+              <option value="Oruro">Oruro</option>
+              <option value="Pando">Pando</option>
+              <option value="Potosi">Potosi</option>
+              <option value="Santa Cruz">Santa Cruz</option>
+              <option value="Tarija">Tarija</option>
             </select>
           </div>
           <div class="md-form input-group">
@@ -446,7 +489,7 @@
                 <option value="X">X</option>
               </select>
             -->
-            <p class="radioLabel">Sexo:</p>
+            <p class="radioLabel"><strong>Sexo</strong>:</p>
             <!-- Default inline 1 -->
             <div class="custom-control custom-radio custom-control-inline">
               <input value="M" type="radio" class="custom-control-input" id="M"
@@ -472,13 +515,21 @@
             />
           </div>
 
-          <br /><br /><br />
-          <button type="submit" class="btn btn-outline-primary waves-effect">
-            Aceptar
-          </button>
-          <a href="/profile" class="btn btn-outline-danger waves-effect">
-            Cancelar
-          </a>
+          <br /><br />
+          <div class="d-flex justify-content-between">
+            <a
+              href="/profile"
+              class="btn btn-outline-danger waves-effect float-left"
+            >
+              Cancelar
+            </a>
+            <button
+              type="submit"
+              class="btn btn-outline-primary waves-effect float-right"
+            >
+              Aceptar
+            </button>
+          </div>
         </form>
       </div>
     </div>

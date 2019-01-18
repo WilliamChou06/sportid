@@ -19,6 +19,12 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/css/mdb.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="/stylesheets/main.css" />
     <title>Perfil</title>
   </head>
@@ -48,6 +54,7 @@
             <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Opinions</a></li>
+            <li class="nav-item"><a class="nav-link" href="/clubadmin">Admin de Club</a></li>
           </ul>
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
@@ -57,49 +64,105 @@
               <a class="nav-link"><i class="fa fa-twitter"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"><i class="fa fa-instagram"></i></a>
+              <a href="/logout" class="nav-link"><i aria-hidden class="fas fa-sign-out-alt" title="Cerrar Sesión"></i></a>
             </li>
           </ul>
         </div>
       </nav>
     </header>
     <!-- Main Navigation -->
-    <br>
-    <div class="container row">
-      <div class="col-3">
+    <br />
+    <% if(error && error.length > 0) { %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <p><%=error %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    <% } %>
+
+    <% if(success && success.length > 0) { %>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <p><%=success %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    <% } %>
+    <div class="container-fluid row mx-auto">
+      
+      <div class="col-lg-4 col-sm-12">
         <img
           id="profileImg"
-          src="http://www.buckinghamandcompany.com.au/wp-content/uploads/2016/03/profile-placeholder.png"
-          alt=""
+          src="<% if(!user.avatar_link){ %> https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png <% } else{ %>
+            <%= user.avatar_link %> <% } %>"
+          alt="profileImg"
+          class="mx-auto d-block"
         />
-        <form id="profileImgForm" class="md-form">
-          <div class="file-field">
-            <div id="profileImgBtn" class="btn btn-primary btn-sm float-left">
-              <span>Choose file</span>
-              <input type="file">
-            </div>
-          </div>
-        </form>
       </div>
-
-      <div class="col-9">
-        <h3><%= user.nombre %> <%= user.apellido %></h3>
-        <br>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Fecha de Nacimiento</strong>: <%= fecha_nac %></li>
-            <li class="list-group-item"><strong>Número de Documento</strong>: <%= user.nro_documento %></li>
-            <li class="list-group-item"><strong>Tipo de Sangre</strong>: <%= user.tipo_sangre %></li>
-            <li class="list-group-item"><strong>Alergias</strong>: <%= user.alergias %></li>
-            <li class="list-group-item"><strong>Seguro de Salud</strong>: <%= user.seguro_salud %></li>
-            <li class="list-group-item"><strong>País de Nacimiento</strong>: <%= user.pais_nac %></li>
-            <li class="list-group-item"><strong>Nombre Contacto de Emergencia</strong>: <%= user.contacto_emerg_nombre %></li>
-            <li class="list-group-item"><strong>Numero Contacto de Emergencia</strong>: <%= user.contacto_emerg_numero %></li>
-            <li class="list-group-item"><strong>Celular</strong>: <%= user.celular %></li>
-            <li class="list-group-item"><strong>Sexo</strong>: <%= user.sexo %></li>
-            <li class="list-group-item"><strong>Club de Triatlón</strong>: <%= user.club_triatlon %></li>
+      <div class="col-lg-8 col-sm-12 row">
+        <div id="profileName" class="col-12"><h3><%= user.nombre %> <%= user.apellidos %></h3></div>
+        <div class="col-lg-6 col-sm-12">
+          
+          <br />
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <strong>Fecha de Nacimiento</strong>: <%= fecha_nac %>
+            </li>
+            <li class="list-group-item">
+              <strong>Número de Documento</strong>: <%= user.nro_documento %>
+            </li>
+            <li class="list-group-item">
+              <strong>Tipo de Sangre</strong>: <%= user.tipo_sangre %>
+            </li>
+            <li class="list-group-item">
+              <strong>Alergias</strong>: <%= user.alergias %>
+            </li>
+            <li class="list-group-item">
+              <strong>Seguro de Salud</strong>: <%= user.seguro_salud %>
+            </li>
+            <li class="list-group-item">
+              <strong>País de Nacimiento</strong>: <%= user.pais_nac %>
+            </li>
+            <li class="list-group-item">
+              <strong>Ciudad de Residencia</strong>: <%= user.ciudad_residencia
+              %>
+            </li>
           </ul>
-        <a href="/profile/<%= user.id %>/edit" class="btn btn-outline-info waves-effect">Editar Información</a>
-
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <ul class="list-group list-group-flush">
+            <br />
+            <li class="list-group-item">
+              <strong>Nombre Contacto de Emergencia</strong>: <%=
+              user.contacto_emerg_nombre %>
+            </li>
+            <li class="list-group-item">
+              <strong>Numero Contacto de Emergencia</strong>: <%=
+              user.contacto_emerg_numero %>
+            </li>
+            <li class="list-group-item">
+              <strong>Celular</strong>: <%= user.celular %>
+            </li>
+            <li class="list-group-item">
+              <strong>Email</strong>: <%= user.email %>
+            </li>
+            <li class="list-group-item">
+              <strong>Sexo</strong>: <%= user.sexo %>
+            </li>
+            <li class="list-group-item">
+              <strong>Club de Triatlón</strong>: <%= user.club_triatlon %>
+            </li>
+            <li class="list-group-item">
+              <strong>Categoria Atrisc</strong>: <%= categoria_atrisc %>
+            </li>
+          </ul>
+        </div>
+        <a
+            href="/profile/<%= user.id %>/edit"
+            class="btn btn-outline-info waves-effect"
+            >Editar Información</a
+          >
       </div>
     </div>
 

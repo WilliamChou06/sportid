@@ -7,13 +7,13 @@ const mysql = require('mysql');
 let connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '123456',
+  password: '',
   database: 'sportid'
 });
 
 connection.connect();
 
-const User = require('../app/models/user');
+// const User = require('../app/models/user');
 
 module.exports = passport => {
   passport.serializeUser((user, done) => {
@@ -52,11 +52,11 @@ module.exports = passport => {
                   email,
                   password,
                   nombre: req.body.nombre,
-                  apellido: req.body.apellido
+                  apellidos: req.body.apellido
                 };
-                let insertQuery = `INSERT INTO users (email, password, nombre, apellido) VALUES ('${email}', '${password}', '${
+                let insertQuery = `INSERT INTO users (email, password, nombre, apellidos) VALUES ('${email}', '${password}', '${
                   newUser.nombre
-                }', '${newUser.apellido}')`;
+                }', '${newUser.apellidos}')`;
                 console.log(insertQuery);
                 connection.query(insertQuery, (err, rows) => {
                   if (err) {
@@ -106,7 +106,7 @@ module.exports = passport => {
               return done(
                 null,
                 false,
-                req.flash('error', 'Oops! Wrong password.')
+                req.flash('error', 'Contraseña equivocada')
               );
             }
 
@@ -134,9 +134,10 @@ module.exports = passport => {
           if (!rows.length) {
             let newUser = {
               googleID: profile.id,
-              nombre: profile.displayName
+              nombre: profile.displayName,
+              email: profile.emails[0].value
             };
-            connection.query(`INSERT INTO users (googleID, nombre) VALUES ('${newUser.googleID}', '${newUser.nombre}')`, (err, rows) => {
+            connection.query(`INSERT INTO users (googleID, nombre, email) VALUES ('${newUser.googleID}', '${newUser.nombre}', '${newUser.email}')`, (err, rows) => {
               if(err) {
                 done(err)
               } else {
