@@ -92,8 +92,7 @@ cloudinary.config({
 module.exports = (app, passport) => {
   app.get('/', (req, res) => {
     if (process.env.NODE_ENV === 'production') {
-      // var googleAuthLink = 'https://sportid6.herokuapp.com/auth/google';
-      var googleAuthLink = 'http://creando-nodejs.com/auth/google/callback';
+      var googleAuthLink = 'https://sportid6.herokuapp.com/auth/google';
     } else {
       var googleAuthLink = 'http://localhost:8080/auth/google';
     }
@@ -163,6 +162,12 @@ module.exports = (app, passport) => {
   });
 
   app.get('/profile', isLoggedIn, (req, res) => {
+    const host = req.hostname;
+    const url = req.url;
+    if(host === "sportid6.herokuapp.com"){
+        res.redirect(301, "http://www.creando-nodejs.com" + url);
+    } else{
+    
     let fecha_nac;
     let categoria_atrisc;
     if (req.user.fecha_nac && req.user.fecha_nac !== 'Invalid date') {
@@ -221,6 +226,7 @@ module.exports = (app, passport) => {
       fecha_nac,
       categoria_atrisc
     });
+  }
   });
 
   app.get('/profile/:id/edit', isLoggedIn, isAuthorized, (req, res) => {
