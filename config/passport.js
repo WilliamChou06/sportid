@@ -4,12 +4,28 @@ const keys = require('../config/keys');
 
 const mysql = require('mysql');
 
+// let connection = mysql.createConnection({
+//   host: 'msc-group.com',
+//   user: 'mscgroup_creando',
+//   password: 'monito75320210',
+//   database: 'mscgroup_creandonode'
+// });
+
 let connection = mysql.createConnection({
-  host: 'db4free.net',
-  user: 'sportid',
-  password: '12345678',
-  database: 'sportid'
+  host: process.env.CONNECTION_HOST,
+  user: process.env.CONNECTION_USER,
+  password: process.env.CONNECTION_PASSWORD,
+  database: 'mscgroup_creandonode'
 });
+
+
+var del = connection._protocol._delegateError;
+connection._protocol._delegateError = function(err, sequence){
+  if (err.fatal) {
+    console.trace('fatal error: ' + err.message);
+  }
+  return del.call(this, err, sequence);
+};
 
 connection.connect(function(err) {
   if (err) {
