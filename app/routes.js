@@ -165,7 +165,7 @@ module.exports = (app, passport) => {
     const host = req.hostname;
     const url = req.url;
     if(host === "sportid6.herokuapp.com"){
-        res.redirect(301, "http://www.creando-nodejs.com" + url);
+        res.redirect(301, "http://www.creando-nodejs.com/profile");
     } else{
     
     let fecha_nac;
