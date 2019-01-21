@@ -163,11 +163,11 @@ module.exports = (app, passport) => {
 
   app.get('/profile', isLoggedIn, (req, res) => {
     
-    // // Redirect in case not correct URL
+    // Redirect in case not correct URL
     // const host = req.hostname;
     // if(host === "sportid6.herokuapp.com"){
     //     res.redirect(301, "http://www.creando-nodejs.com/profile");
-    // } else{
+    // } else
     
     let fecha_nac;
     let categoria_atrisc;
@@ -227,7 +227,7 @@ module.exports = (app, passport) => {
       fecha_nac,
       categoria_atrisc
     });
-  }
+  
   });
 
   app.get('/profile/:id/edit', isLoggedIn, isAuthorized, (req, res) => {
