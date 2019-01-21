@@ -3,10 +3,10 @@ const mysql = require('mysql');
 const keys = require('../config/keys');
 
 let connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
+  host: 'msc-group.com',
+  user: 'mscgroup_creando',
   password: '',
-  database: 'sportid'
+  database: 'mscgroup_creandonode'
 });
 
 connection.connect();
