@@ -60,7 +60,7 @@ cloudinary.config({
 module.exports = (app, passport) => {
   app.get('/', (req, res) => {
     if (process.env.NODE_ENV === 'production') {
-      var googleAuthLink = 'https://sportid6.herokuapp.com/auth/google';
+      var googleAuthLink = 'http://www.creando-nodejs.com/auth/google/callback';
     } else {
       var googleAuthLink = 'http://localhost:8080/auth/google';
     }
