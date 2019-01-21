@@ -11,39 +11,42 @@ const mysql = require('mysql');
 //   database: 'mscgroup_creandonode'
 // });
 
-let db_config = mysql.createConnection({
+let db_config = {
   host: process.env.CONNECTION_HOST,
   user: process.env.CONNECTION_USER,
   password: process.env.CONNECTION_PASSWORD,
   database: 'mscgroup_creandonode'
-});
+};
 
 function handleDisconnect() {
   connection = mysql.createConnection(db_config); // Recreate the connection, since
-                                                  // the old one cannot be reused.
+  // the old one cannot be reused.
 
-  connection.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
+  connection.connect(function(err) {
+    // The server is either down
+    if (err) {
+      // or restarting (takes a while sometimes).
       console.log('error when connecting to db:', err);
       setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-    }                                     // to avoid a hot loop, and to allow our node script to
-  });                                     // process asynchronous requests in the meantime.
-                                          // If you're also serving http, display a 503 error.
+    } // to avoid a hot loop, and to allow our node script to
+  }); // process asynchronous requests in the meantime.
+  // If you're also serving http, display a 503 error.
   connection.on('error', function(err) {
     console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-      handleDisconnect();                         // lost due to either server restart, or a
-    } else {                                      // connnection idle timeout (the wait_timeout
-      throw err;                                  // server variable configures this)
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      // Connection to the MySQL server is usually
+      handleDisconnect(); // lost due to either server restart, or a
+    } else {
+      // connnection idle timeout (the wait_timeout
+      throw err; // server variable configures this)
     }
   });
 }
 
 handleDisconnect();
 
-
 var del = connection._protocol._delegateError;
-connection._protocol._delegateError = function(err, sequence){
+connection._protocol._delegateError = function(err, sequence) {
   if (err.fatal) {
     console.trace('fatal error: ' + err.message);
   }
@@ -92,7 +95,11 @@ module.exports = passport => {
               }
 
               if (rows.length) {
-                return done(null, false, req.flash('error', 'El email ya esta en uso.'));
+                return done(
+                  null,
+                  false,
+                  req.flash('error', 'El email ya esta en uso.')
+                );
               } else {
                 let newUser = {
                   email,
@@ -172,29 +179,37 @@ module.exports = passport => {
         callbackURL: keys.googleCallbackURL
       },
       (accessToken, refreshToken, profile, done) => {
-        connection.query(`SELECT * FROM users WHERE googleID = ${profile.id}`, (err, rows) => {
-          if (err) {
-            done(err)
-          }
+        connection.query(
+          `SELECT * FROM users WHERE googleID = ${profile.id}`,
+          (err, rows) => {
+            if (err) {
+              done(err);
+            }
 
-          if (!rows.length) {
-            let newUser = {
-              googleID: profile.id,
-              nombre: profile.displayName,
-              email: profile.emails[0].value
-            };
-            connection.query(`INSERT INTO users (googleID, nombre, email) VALUES ('${newUser.googleID}', '${newUser.nombre}', '${newUser.email}')`, (err, rows) => {
-              if(err) {
-                done(err)
-              } else {
-                newUser.id = rows.insertId;
-                return done(null, newUser);
-              }
-            })
-          } else {
-            done(null, rows[0]);
+            if (!rows.length) {
+              let newUser = {
+                googleID: profile.id,
+                nombre: profile.displayName,
+                email: profile.emails[0].value
+              };
+              connection.query(
+                `INSERT INTO users (googleID, nombre, email) VALUES ('${
+                  newUser.googleID
+                }', '${newUser.nombre}', '${newUser.email}')`,
+                (err, rows) => {
+                  if (err) {
+                    done(err);
+                  } else {
+                    newUser.id = rows.insertId;
+                    return done(null, newUser);
+                  }
+                }
+              );
+            } else {
+              done(null, rows[0]);
+            }
           }
-        })
+        );
       }
     )
   );

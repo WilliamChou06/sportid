@@ -9,12 +9,12 @@ const keys = require('../config/keys');
 //   database: 'mscgroup_creandonode'
 // });
 
-let db_config = mysql.createConnection({
+let db_config = {
   host: process.env.CONNECTION_HOST,
   user: process.env.CONNECTION_USER,
   password: process.env.CONNECTION_PASSWORD,
   database: 'mscgroup_creandonode'
-});
+};
 
 // var db_config = {
 //   host: 'localhost',
